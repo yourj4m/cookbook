@@ -3,22 +3,25 @@
 \documentclass[]{article}
 
 \usepackage[contents, index]{cuisine}
+\usepackage[a4paper, margin=1.5in, centering]{geometry}
 
 %opening
 \title{A Collection of Recipes}
-\author{J. Michael}
+\author{jam}
 
 \begin{document}
+
+\renewcommand*{\recipetitlefont}{\large\bfseries\sffamily}
+\renewcommand*{\recipenumberfont}{\large\bfseries\sffamily}
+\renewcommand*{\recipequantityfont}{\sffamily\bfseries}
+\renewcommand*{\recipeunitfont}{\sffamily}
+\renewcommand*{\recipeingredientfont}{\sffamily}
+\renewcommand*{\recipefreeformfont}{\itshape}
+%\renewcommand*{\recipestepnumberfont}{\Roman}
 \maketitle
 
 \tableofcontents
-
-\begin{abstract}
-In life, many meals are prepared.
-The best ones are collected here. \\
-All recipes are vegan-friendly.
-\end{abstract}
-
+\begin{center}
 \begin{recipe}{Pancakes}{2 portions}{\fr12 hour}
 	\ingredient[1]{cup}{flour}
 	\ingredient[1]{touch}{salt}
@@ -30,11 +33,11 @@ All recipes are vegan-friendly.
 	Mash the banana into pulp.
 	Then mix the banana pulp and milk with the dry ingredients.
 	Let the batter rest until some bubbles start to form.
-	\ingredient[\vspace{1pt}]{Many}{fruits}
+	\ingredient[]{\hspace{11pt}Many}{fruits}
 	Optionally, add fruits to the batter.
 	Blueberries are recommended.
-	\ingredient[1]{tbsp}{margarine}
-	Heat a pan, add margarine or butter and fry pancakes once per side until bubbles start to form.
+	\freeform Heat a pan, add margarine or butter and fry pancakes once per side until bubbles start to form.
+	\freeform\hrulefill
 \end{recipe}
 
 \begin{recipe}{Chocolate Coconut Cereal}{A weeks worth}{1 hour}
@@ -49,17 +52,18 @@ All recipes are vegan-friendly.
 	Heat coconut oil and honey in a pot and mix.
 	Pour mixture over dry ingredients while stirring.
 	\newstep
-	Spread over baking paper and put in the oven for 10-12 minutes.
+	Spread over baking paper and bake for 10-12 minutes.
 	\ingredient[50]{grams}{dark chocolate}
 	Sprinkle dark chocolate pieces over the cereal fresh out of the oven.
 	Mix and let cool, then store for later consumption.
+	\freeform\hrulefill
 \end{recipe}
 
 \begin{recipe}{Lentil Dal}{5 portions}{45 mins}
 	\ingredient[2]{}{white onions}
 	\ingredient[50]{grams}{ginger}
 	\ingredient[5]{cloves}{garlic}
-	Chop it all up and fry it in the pot with oil.
+	Chop it all up and fry with oil in a pot.
 	\ingredient[3]{tsp}{garam masala}
 	Add garam masala and continue to roast briefly.
 	\ingredient[500]{grams}{lentils}
@@ -69,8 +73,8 @@ All recipes are vegan-friendly.
 	\ingredient{to taste}{salt, pepper, chili}
 	Add all to the pot and stir.
 	Let simmer for about 20 minutes.
-	\newstep
-	Serve with bread, rice or potatoes.
+	\freeform Serve with bread, rice or potatoes.
+	\freeform\hrulefill
 \end{recipe}
 
 \begin{recipe}{Coconut Zucchini Risotto}{3 portions}{1 hour}
@@ -87,7 +91,7 @@ All recipes are vegan-friendly.
 	\newstep
 	Gradually add more broth, waiting for the rice to absorb it at each step.
 	Cook for about 12 minutes.
-	\ing[1]{big}[zucchini]
+	\ing[1]{}{zucchini}
 	Add cubed zucchini to the pot. 
 	Cook for 8 more minutes.
 	\ing[2]{tbsp}{sesame oil}
@@ -96,10 +100,26 @@ All recipes are vegan-friendly.
 	\ing[1]{tbsp}{honey/syrup}
 	\ing[250]{grams}{smoked tofu}
 	Dice tofu and marinade with other ingredients.
-	\newstep
 	Heat a pan on medium-high heat and fry tofu until crispy.
-	\newstep
-	Serve rice with tofu.
+	\freeform\hrulefill
 \end{recipe}
 
+\begin{recipe}{Pickling Liquid}{As needed}{30 mins}
+	\ingredient[1]{cup}{white vinegar}
+	\ingredient[1]{cup}{water}
+	Mix equal parts vinegar and water, bring to a boil.
+	\ingredient[3/4]{cup}{sugar}
+	Add sugar once boiling.
+	\ingredient[2]{tbsp}{salt}
+	\ingredient[4]{pieces}{ginger}
+	\ingredient[5]{}{black peppercorns}
+	Reduce heat, add spices and keep on low heat for 20 minutes.
+	\newstep
+	\freeform Slice and prepare the vegetables to be pickled. 
+	Pour liquid over the vegetables in a container. 
+	Let fully cool before screwing on the lid.
+	\freeform\hrulefill
+\end{recipe}
+
+\end{center}
 \end{document}
