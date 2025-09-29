@@ -2,21 +2,168 @@
 <html>
 <head>
   <title>recipes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
   <style>
     body, html {
       margin: 0;
       padding: 0;
       height: 100%;
-      overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #f5f5f5;
     }
+    
+    .container {
+      width: 100%;
+      height: 100vh;
+      position: relative;
+    }
+    
+    .pdf-container {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch; /* Enable momentum scrolling on iOS */
+    }
+    
     iframe {
       border: none;
       width: 100%;
-      height: 100%;
+      min-height: 100vh;
+      display: block;
+    }
+    
+    /* Fallback for browsers that don't support PDF in iframe */
+    .pdf-fallback {
+      display: none;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    .pdf-fallback a {
+      display: inline-block;
+      padding: 12px 24px;
+      background-color: #007AFF;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      margin: 10px;
+    }
+    
+    /* iOS-specific adjustments */
+    @media screen and (max-width: 768px) {
+      .pdf-container {
+        -webkit-overflow-scrolling: touch;
+        overflow-y: scroll;
+        overflow-x: auto;
+      }
+      
+      iframe {
+        min-height: 150vh; /* Ensure enough height for scrolling */
+      }
+    }
+    
+    /* Detection for iOS Safari */
+    @supports (-webkit-touch-callout: none) {
+      .pdf-container {
+        height: 100vh;
+        overflow-y: scroll;
+        -webkit-overflow-scrolling: touch;
+      }
     }
   </style>
 </head>
 <body>
-  <iframe src="latex/recipes.pdf"></iframe>
+  <div class="container">
+    <div class="pdf-container">
+      <iframe src="latex/recipes.pdf" id="pdfFrame"></iframe>
+    </div>
+    <div class="pdf-fallback" id="fallback">
+      <h2>PDF Viewer</h2>
+      <p>If the PDF doesn't display properly, you can:</p>
+      <a href="latex/recipes.pdf" target="_blank">Open PDF in New Tab</a>
+      <a href="latex/recipes.pdf" download>Download PDF</a>
+    </div>
+  </div>
+  
+  <script>
+    // Detect iOS and improve PDF handling
+    function isIOS() {
+      return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    }
+    
+    function isIOSSafari() {
+      return isIOS() && /Safari/.test(navigator.userAgent) && !/CriOS|FxiOS/.test(navigator.userAgent);
+    }
+    
+    // Enhanced PDF loading for iOS
+    function setupPDFViewer() {
+      const iframe = document.getElementById('pdfFrame');
+      const fallback = document.getElementById('fallback');
+      const container = document.querySelector('.pdf-container');
+      
+      if (isIOS()) {
+        // For iOS, ensure proper scrolling
+        container.style.webkitOverflowScrolling = 'touch';
+        container.style.overflowY = 'scroll';
+        
+        // Add error handling
+        iframe.onerror = function() {
+          iframe.style.display = 'none';
+          fallback.style.display = 'block';
+        };
+        
+        // Try to detect if PDF loaded successfully
+        iframe.onload = function() {
+          try {
+            // Check if iframe content is accessible
+            if (iframe.contentDocument || iframe.contentWindow) {
+              // PDF loaded successfully
+              console.log('PDF loaded successfully');
+            }
+          } catch (e) {
+            // Likely a PDF, which is expected
+            console.log('PDF loaded in iframe');
+          }
+        };
+        
+        // For iOS Safari, add additional handling
+        if (isIOSSafari()) {
+          // Set a timeout to check if PDF is displaying
+          setTimeout(() => {
+            // If the iframe height is very small, show fallback
+            if (iframe.offsetHeight < 100) {
+              iframe.style.display = 'none';
+              fallback.style.display = 'block';
+            }
+          }, 2000);
+        }
+      }
+    }
+    
+    // Initialize when page loads
+    document.addEventListener('DOMContentLoaded', setupPDFViewer);
+    
+    // Prevent zoom on double tap for better scrolling experience
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', function (event) {
+      const now = (new Date()).getTime();
+      if (now - lastTouchEnd <= 300) {
+        event.preventDefault();
+      }
+      lastTouchEnd = now;
+    }, false);
+    
+    // Handle orientation changes on mobile
+    window.addEventListener('orientationchange', function() {
+      setTimeout(() => {
+        // Force reflow
+        document.body.style.height = window.innerHeight + 'px';
+        setTimeout(() => {
+          document.body.style.height = '100%';
+        }, 100);
+      }, 100);
+    });
+  </script>
 </body>
 </html>
